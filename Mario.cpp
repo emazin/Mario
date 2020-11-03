@@ -3,6 +3,11 @@
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(600, 400), "Mario!");
+    sf::Texture image;
+    image.loadFromFile("mario.png");
+    sf::Sprite mario(image, sf::IntRect(0, 98, 80, 80));
+    mario.setPosition(0, 300);
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -11,8 +16,7 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
-        window.clear();
+        window.draw(mario);
         window.display();
     }
 
