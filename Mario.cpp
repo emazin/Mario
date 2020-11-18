@@ -11,6 +11,18 @@ int main()
 
 	sf::Clock timer;
 
+	sf::IntRect seq[] =
+	{
+		{ 0, 98, 80, 80 },
+		{ 100, 98, 80, 80 },
+		{ 100, 198, 80, 80 },
+		{ 100, 298, 80, 80 },
+		{ 200, 98, 80, 80 },
+		{ 300, 98, 80, 80 },
+		{ 400, 98, 80, 80 }
+	};
+	int currentRect = 0;
+
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -30,11 +42,9 @@ int main()
 
 		if (timer.getElapsedTime().asMilliseconds() > 200)
 		{
-			rectangle.left += 100;
-			if (rectangle.left >= 500)
-				rectangle.left = 0;
-
-			mario.setTextureRect(rectangle);
+			mario.setTextureRect(seq[currentRect++]);
+			if (currentRect >= sizeof(seq) / sizeof(seq[0]))
+				currentRect = 0;
 			timer.restart();
 		}
 
