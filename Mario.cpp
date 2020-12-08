@@ -1,14 +1,41 @@
 #include <SFML/Graphics.hpp>
 
+class Mario
+{
+public:
+	Mario()
+	{
+		image.loadFromFile("mario.png");
+		rectangle = sf::IntRect(0, 98, 80, 80);
+		sprite = sf::Sprite(image, rectangle);
+		sprite.setPosition(0, 300);
+	}
+
+	void move(int x, int y)
+	{
+		sprite.move(x, y);
+	}
+
+	void draw(sf::RenderWindow& window)
+	{
+		window.draw(sprite);
+	}
+
+	void setRect(sf::IntRect rect)
+	{
+		sprite.setTextureRect(rect);
+	}
+
+private:
+	sf::Texture image;
+	sf::IntRect rectangle;
+	sf::Sprite sprite;
+};
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(600, 400), "Mario!");
-	sf::Texture image;
-	image.loadFromFile("mario.png");
-	sf::IntRect rectangle(0, 98, 80, 80);
-	sf::Sprite mario(image, rectangle);
-	mario.setPosition(0, 300);
-
+	Mario mario;
 	sf::Clock timer;
 
 	sf::IntRect seq[] =
@@ -42,14 +69,14 @@ int main()
 
 		if (timer.getElapsedTime().asMilliseconds() > 200)
 		{
-			mario.setTextureRect(seq[currentRect++]);
+			mario.setRect(seq[currentRect++]);
 			if (currentRect >= sizeof(seq) / sizeof(seq[0]))
 				currentRect = 0;
 			timer.restart();
 		}
 
 		window.clear();
-		window.draw(mario);
+		mario.draw(window);
 		window.display();
 	}
 
